@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="MySQL - test@localhost" uuid="615e50d6-a1d7-4d02-af62-3950e0bea8d7">
+    <database-info product="MySQL" version="5.6.21-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.31 ( Revision: alexander.soklakov@oracle.com-20140520065950-groqzzbvxprqdmnz )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="test"/>
+    <table name="cities" schema="" catalog="test" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="city" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="country_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="perCountry" columns="country_id" ref-table="countries" ref-schema="" ref-catalog="test" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="perCity" table="hotels" schema="" catalog="test" columns="city_id"/>
+      <index name="perCountry" unique="false" columns="country_id"/>
+    </table>
+    <table name="clients" schema="" catalog="test" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="first_name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="adress" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="perClient" table="orders" schema="" catalog="test" columns="client_id"/>
+    </table>
+    <table name="countries" schema="" catalog="test" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="country" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="perCountry" table="cities" schema="" catalog="test" columns="country_id"/>
+    </table>
+    <table name="hotels" schema="" catalog="test" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="city_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="hotel" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="stars" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="board" sqlType="VARCHAR" precision="5" scale="0" nullable="false" jdbcType="12"/>
+      <column name="rooms" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="service" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="perCity" columns="city_id" ref-table="cities" ref-schema="" ref-catalog="test" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="perHotel" table="tours" schema="" catalog="test" columns="hotel_id"/>
+      <index name="perCity" unique="false" columns="city_id"/>
+    </table>
+    <table name="orders" schema="" catalog="test" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="tour_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="client_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="worker_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="date" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="perClient" columns="client_id" ref-table="clients" ref-schema="" ref-catalog="test" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="perTour" columns="tour_id" ref-table="tours" ref-schema="" ref-catalog="test" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="perWorker" columns="worker_id" ref-table="workers" ref-schema="" ref-catalog="test" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="perClient" unique="false" columns="client_id"/>
+      <index name="perTour" unique="false" columns="tour_id"/>
+      <index name="perWorker" unique="false" columns="worker_id"/>
+    </table>
+    <table name="tours" schema="" catalog="test" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="hotel_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="transport_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="departing" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <column name="returning" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <column name="length" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="price" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="perHotel" columns="hotel_id" ref-table="hotels" ref-schema="" ref-catalog="test" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="perTransport" columns="transport_id" ref-table="transport" ref-schema="" ref-catalog="test" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="perTour" table="orders" schema="" catalog="test" columns="tour_id"/>
+      <index name="perHotel" unique="false" columns="hotel_id"/>
+      <index name="perTransport" unique="false" columns="transport_id"/>
+    </table>
+    <table name="transport" schema="" catalog="test" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="transport_type" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="perTransport" table="tours" schema="" catalog="test" columns="transport_id"/>
+    </table>
+    <table name="workers" schema="" catalog="test" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="first_name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="birthday" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <column name="salary" sqlType="FLOAT" precision="20" scale="0" nullable="false" jdbcType="7"/>
+      <column name="work_post" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="experience" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="perWorker" table="orders" schema="" catalog="test" columns="worker_id"/>
+    </table>
+  </data-source>
+</component>
